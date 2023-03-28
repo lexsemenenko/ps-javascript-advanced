@@ -9,7 +9,7 @@ const myArray = [
 ];
 
 // Вставляться в set будут только уникальные значения id, т.к. Set не может содержать повторяющиеся значения.
-const set = new Set(myArray.map((a) => a.id)); // Получаем Set(2) { 1, 2 }
+const set = new Set(myArray.map((item) => item.id)); // Получаем Set(2) { 1, 2 }
 
 // Возвращаем массив, в котором каждый элемент будет найден по уникальным id из созданного Set.
 const noDuplicates = [...set].map((id) =>
