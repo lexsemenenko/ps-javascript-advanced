@@ -1,19 +1,38 @@
-'use strict';
+// Генератор случайных чисел, по параметру
+function generateNumber(num) {
+    // Проверка на число и положительность
+    if (typeof num !== 'number' || num <= 0) {
+        return 'Invalid input: Sides must be a positive number';
+    }
 
-// Task: Сделать с помощью Set уникализацию массива обьектов используя map и find.
+    return Math.floor(Math.random() * num) + 1;
+}
 
-const myArray = [
-  { id: 1, name: 'Вася' },
-  { id: 2, name: 'Петя' },
-  { id: 1, name: 'Вася' },
-];
+// Генератор случайных чисел, по названию из существующих
+function rollDice(dicePassed) {
+    const possibleSides = {
+        d4: 4,
+        d6: 6,
+        d8: 8,
+        d10: 10,
+        d12: 12,
+        d16: 16,
+        d20: 20,
+    };
 
-// Вставляться в set будут только уникальные значения id, т.к. Set не может содержать повторяющиеся значения.
-const set = new Set(myArray.map((item) => item.id)); // Получаем Set(2) { 1, 2 }
+    const possibleNames = Object.keys(possibleSides).join(', ');
 
-// Возвращаем массив, в котором каждый элемент будет найден по уникальным id из созданного Set.
-const noDuplicates = [...set].map((id) =>
-  myArray.find((item) => item.id === id)
-);
+    // Проверка на существование
+    const sides = possibleSides[dicePassed];
 
-console.log(noDuplicates); // [ { id: 1, name: 'Вася' }, { id: 2, name: 'Петя' } ]
+    // Если не существует, то возвращаем ошибку
+    if (!sides) {
+        return `Нет дайса по названию: ${dicePassed}, емеются: ${possibleNames}`;
+    }
+    // Если существует, то возвращаем случайное число
+    return generateNumber(sides);
+}
+
+// Проверка
+console.log(rollDice('d10')); // выдаст случайное число от 1 до 10
+console.log(rollDice('d3')); // выдаст сообщение что нет дайса по названию: d3, емеются: d4, d6, d8, d10, d12, d16, d20
